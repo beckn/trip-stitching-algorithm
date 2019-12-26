@@ -1,3 +1,7 @@
+# author: Soma S Dhavala
+# date: 25th December, 2019
+# Ref: https://docs.google.com/document/d/1vyeHU3ahDZ-4WOnmpu6f02QTfPh3ngbq8rZIJ2o3zUI/edit?usp=sharing
+
 import networkx as nx
 import numpy as np
 
