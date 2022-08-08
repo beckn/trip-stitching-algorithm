@@ -104,8 +104,6 @@ S3. _stop_num_paths_found _is greater than _threshold (positive integer)_
 # Algorithm Main Block
 
 
----
-
 **Initialize: **
 
 
