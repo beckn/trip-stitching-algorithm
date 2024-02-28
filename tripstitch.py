@@ -195,7 +195,7 @@ while(counter < 10):
   missing_link_update()
   G_n_miss = nx.complete_graph(G).to_directed()
   G_n_miss = Update_G_n_miss(G_n_miss)
-  # showGraph()
+  showGraph()
   evaluate_paths_n_routes(10)
   missing_links = FilterRankSelectMissingLinks()
   # pprint.pprint(missing_link_dict)
