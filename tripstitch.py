@@ -60,14 +60,19 @@ def GetRoutes(missing_links):
 	return routes
 
 def showGraph():
-    edgeCol1 = []
-    alpha = []
+    global transfer_threshold
+    # edgeCol1 = []
+    # alpha = []
     global pos
+    figure, axes = plt.subplots()
+    for node in G.nodes:
+      c = plt.Circle((pos[node][0], pos[node][1]), transfer_threshold/10, alpha=0.1 )
+      axes.add_artist(c)
     nx.draw_networkx_nodes(G, pos )
     nx.draw_networkx_labels(G, pos)
-    nx.draw_networkx_edges(db, pos, edge_color=["blue"]*(n*(n-1)), alpha = [0.1]*(n*(n-1)))
+    nx.draw_networkx_edges(db, pos, edge_color=["blue"]*(n*(n-1)), alpha = [0]*(n*(n-1)))
     nx.draw_networkx_edges(G, pos, edge_color=["black"]*(n*(n-1)))
-    nx.draw_networkx_edges(G_n_miss, pos, edge_color=["red"]*(n*(n-1)),  alpha = [0.1]*(n*(n-1)))
+    nx.draw_networkx_edges(G_n_miss, pos, edge_color=["red"]*(n*(n-1)),  alpha = [0]*(n*(n-1)))
     plt.show()
 
 '''Update the CLient Side Graph to accomodate New Nodes and Edges and decide which missing links to request on next iteration'''
@@ -187,7 +192,7 @@ counter = 0
 missing_links = [[src,dst]]
 paths_dict = {} #for ranking paths
 missing_link_dict = {} #for ranking missing links
-transfer_threshold = 5;
+transfer_threshold = 2
 
 while(counter < 10):
   r = GetRoutes(missing_links)
@@ -195,7 +200,7 @@ while(counter < 10):
   missing_link_update()
   G_n_miss = nx.complete_graph(G).to_directed()
   G_n_miss = Update_G_n_miss(G_n_miss)
-  showGraph()
+  # showGraph()
   evaluate_paths_n_routes(10)
   missing_links = FilterRankSelectMissingLinks()
   # pprint.pprint(missing_link_dict)
@@ -205,6 +210,8 @@ while(counter < 10):
   for key, value in sorted(paths_dict.items(), key=lambda x: x[1]["path_length"]):
     if(value["transfer_threshold"]):
       print(f"{key}: {value}")
+  showGraph()
+  
   # print("Missing links: ",missing_links)
   counter+=3
 
