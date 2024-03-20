@@ -40,7 +40,7 @@ def GetRoutes(missing_links):
 	global dst
 	routes = []
 	for link in missing_links:
-		if(random.randint(0,1) or (link[0]==src and link[1]==dst)):
+		if(random.randint(0,1) or random.randint(0,1) or (link[0]==src and link[1]==dst)):
 			src1 = link[0]
 			dst1 = link[1]
 			dist = abs(db[src][dst]['dist']-0.5)
@@ -132,7 +132,7 @@ def evaluate_paths_n_routes(num):
     i = 0
     transfer_flag=False
     while(i<len(path)-1):
-      paths_dict[path_str]["path_length"] += db[path[i]][path[i+1]]['dist'];
+      paths_dict[path_str]["path_length"] += db[path[i]][path[i+1]]['dist']
       if(not G.has_edge(path[i],path[i+1])):
 
           '''path ranking params'''
@@ -192,9 +192,9 @@ counter = 0
 missing_links = [[src,dst]]
 paths_dict = {} #for ranking paths
 missing_link_dict = {} #for ranking missing links
-transfer_threshold = 2
+transfer_threshold = 1
 
-while(counter < 10):
+while(counter < 3):
   r = GetRoutes(missing_links)
   UpdateGraph(r)
   missing_link_update()
@@ -204,14 +204,15 @@ while(counter < 10):
   evaluate_paths_n_routes(10)
   missing_links = FilterRankSelectMissingLinks()
   # pprint.pprint(missing_link_dict)
-  for key, value in sorted(missing_link_dict.items(), key=lambda x: x[1]["occ_freq"]):
-    if(not value["transferable"]):
-      print(key)
+  # for key, value in sorted(missing_link_dict.items(), key=lambda x: x[1]["occ_freq"]):
+  #   if(not value["transferable"]):
+  #     print(key)
   for key, value in sorted(paths_dict.items(), key=lambda x: x[1]["path_length"]):
     if(value["transfer_threshold"]):
       print(f"{key}: {value}")
-  showGraph()
+  print()
   
   # print("Missing links: ",missing_links)
-  counter+=3
+  counter+=1
+showGraph()
 
